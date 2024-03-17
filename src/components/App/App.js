@@ -6,7 +6,6 @@ import ShoeIndex from '../ShoeIndex';
 
 const App = () => {
   const [sortId, setSortId] = React.useState('newest');
-
   return (
     <>
       <Header />
@@ -19,6 +18,8 @@ const App = () => {
 
 const Main = styled.main`
   padding: 64px 32px;
+
+
 `;
 
 export default App;

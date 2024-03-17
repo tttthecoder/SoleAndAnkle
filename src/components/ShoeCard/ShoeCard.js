@@ -30,49 +30,65 @@ const ShoeCard = ({
     : isNewShoe(releaseDate)
       ? 'new-release'
       : 'default'
-
   return (
     <Link href={`/shoe/${slug}`}>
       <Wrapper>
         <ImageWrapper>
+          {variant ==="default"? null :<Flag style={{"--color": variant=== "new-release"? COLORS.secondary: COLORS.primary}} 
+          children={variant === "on-sale" ? "Sale" : "Just Released!"} />}
           <Image alt="" src={imageSrc} />
         </ImageWrapper>
         <Spacer size={12} />
         <Row>
           <Name>{name}</Name>
-          <Price>{formatPrice(price)}</Price>
+          {salePrice? <Price style={{"--text-decoration": "line-through", "--color": COLORS.gray[500]}}>{formatPrice(price)} </Price> : <Price style={{"--text-decoration": "none", "--color": "inherit"}}>{formatPrice(price)}</Price>}
         </Row>
         <Row>
           <ColorInfo>{pluralize('Color', numOfColors)}</ColorInfo>
+          {salePrice? <Price style={{"--text-decoration": "none", "--color": COLORS.primary}}>{formatPrice(salePrice)} </Price> : null}
         </Row>
       </Wrapper>
     </Link>
   );
 };
-
+const Flag = styled.div`
+position: absolute;
+right: -4px;
+top: 12px;
+font-weight: ${WEIGHTS.medium};
+color: ${COLORS.white};
+background-color: var(--color);
+border-radius: 2px;
+height: 30px;
+line-height: 30px;
+padding: 0px 10px;
+`
 const Link = styled.a`
   text-decoration: none;
   color: inherit;
 `;
-
 const Wrapper = styled.article``;
-
 const ImageWrapper = styled.div`
   position: relative;
+  `;
+const Image = styled.img`
+border-radius: 16px 16px 4px 4px;
 `;
-
-const Image = styled.img``;
 
 const Row = styled.div`
   font-size: 1rem;
+  display: flex;
 `;
-
 const Name = styled.h3`
   font-weight: ${WEIGHTS.medium};
   color: ${COLORS.gray[900]};
 `;
 
-const Price = styled.span``;
+const Price = styled.span`
+margin-left: auto;
+text-decoration: var(--text-decoration);
+color: var(--color);
+`;
 
 const ColorInfo = styled.p`
   color: ${COLORS.gray[700]};
